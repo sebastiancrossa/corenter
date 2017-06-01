@@ -13,6 +13,9 @@
 		984EE8BA1EDFCBD2008C2E26 /* Corenter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 984EE8B81EDFCBD2008C2E26 /* Corenter.xcdatamodeld */; };
 		984EE8BC1EDFCBD2008C2E26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 984EE8BB1EDFCBD2008C2E26 /* Assets.xcassets */; };
 		984EE8BF1EDFCBD2008C2E26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 984EE8BD1EDFCBD2008C2E26 /* LaunchScreen.storyboard */; };
+		984EE8CA1EDFD4E7008C2E26 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 984EE8C61EDFD014008C2E26 /* Lato-Black.ttf */; };
+		984EE8CB1EDFD4EE008C2E26 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 984EE8C91EDFD4B3008C2E26 /* Lato-Bold.ttf */; };
+		984EE8CC1EDFD4F0008C2E26 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 984EE8C81EDFD4AB008C2E26 /* Lato-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +28,8 @@
 		984EE8BE1EDFCBD2008C2E26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		984EE8C01EDFCBD2008C2E26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		984EE8C61EDFD014008C2E26 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Black.ttf"; path = "../../../Graphics/Kauf_UI_Kit_Bundle_lite_byYebo/Fonts/Lato/Lato-Black.ttf"; sourceTree = "<group>"; };
+		984EE8C81EDFD4AB008C2E26 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Regular.ttf"; path = "../../../Graphics/Kauf_UI_Kit_Bundle_lite_byYebo/Fonts/Lato/Lato-Regular.ttf"; sourceTree = "<group>"; };
+		984EE8C91EDFD4B3008C2E26 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Bold.ttf"; path = "../../../Graphics/Kauf_UI_Kit_Bundle_lite_byYebo/Fonts/Lato/Lato-Bold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,12 +66,22 @@
 				984EE8B31EDFCBD2008C2E26 /* ViewController.swift */,
 				984EE8B51EDFCBD2008C2E26 /* Main.storyboard */,
 				984EE8BB1EDFCBD2008C2E26 /* Assets.xcassets */,
-				984EE8C61EDFD014008C2E26 /* Lato-Black.ttf */,
+				984EE8C71EDFD48A008C2E26 /* Resources */,
 				984EE8BD1EDFCBD2008C2E26 /* LaunchScreen.storyboard */,
 				984EE8C01EDFCBD2008C2E26 /* Info.plist */,
 				984EE8B81EDFCBD2008C2E26 /* Corenter.xcdatamodeld */,
 			);
 			path = Corenter;
+			sourceTree = "<group>";
+		};
+		984EE8C71EDFD48A008C2E26 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				984EE8C61EDFD014008C2E26 /* Lato-Black.ttf */,
+				984EE8C91EDFD4B3008C2E26 /* Lato-Bold.ttf */,
+				984EE8C81EDFD4AB008C2E26 /* Lato-Regular.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,6 +144,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				984EE8CA1EDFD4E7008C2E26 /* Lato-Black.ttf in Resources */,
+				984EE8CC1EDFD4F0008C2E26 /* Lato-Regular.ttf in Resources */,
+				984EE8CB1EDFD4EE008C2E26 /* Lato-Bold.ttf in Resources */,
 				984EE8BF1EDFCBD2008C2E26 /* LaunchScreen.storyboard in Resources */,
 				984EE8BC1EDFCBD2008C2E26 /* Assets.xcassets in Resources */,
 				984EE8B71EDFCBD2008C2E26 /* Main.storyboard in Resources */,

@@ -10,10 +10,16 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet var goButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        goButton.layer.cornerRadius = 8
     }
 
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 }
 
