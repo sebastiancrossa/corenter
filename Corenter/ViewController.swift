@@ -11,25 +11,23 @@ import CoreData
 
 class ViewController: UIViewController {
 
-    
-    var userLimit : Bool = false
-    
     @IBOutlet var goButton: UIButton!
     @IBOutlet var textField: UITextField!
     @IBOutlet var welcomeUser: UILabel!
+    
+    @IBOutlet var logInTitle: UILabel!
+    @IBOutlet var welcomeTitle: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         goButton.layer.cornerRadius = 8
+        welcomeUser.textColor = goButton.backgroundColor
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         // This will let us acces and modify CoreData
         let context = appDelegate.persistentContainer.viewContext
-        
-        // Creates a profile for the user of the app
-        let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context)
         
         // Adding values to newUser manually
         // newUser.setValue("Sebastian Crossa", forKey: "username")
@@ -45,13 +43,18 @@ class ViewController: UIViewController {
             // Constant in charge of fetching the results
             let results = try context.fetch(request)
             
+            // Will see if there is currently a username registered in CoreData
+            // If a connection can be established, welcome screen will welcome the
+            // user. If not, it will stay the same
             for results in results as! [NSManagedObject] {
                 if let username = results.value(forKey: "username") {
+                    logInTitle.isHidden = true
                     textField.isHidden = true
                     goButton.isHidden = true
                     welcomeUser.isHidden = false
+                    welcomeTitle.isHidden = false
                     
-                    welcomeUser.text = "Welcome, \(username)!"
+                    welcomeUser.text = "\(username)"
                 }
             }
             
@@ -62,23 +65,26 @@ class ViewController: UIViewController {
     }
     
     @IBAction func logIn(_ sender: Any) {
+        // Creating the basic connections for CoreData, same as before (explained above)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let context = appDelegate.persistentContainer.viewContext
         
         let newValues = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context)
         
+        // Create a new value in CoreData with the text entered by the user
         newValues.setValue(textField.text, forKey: "username")
         
         // Saving the new values in CoreData
         do {
             try context.save()
             
+            logInTitle.isHidden = true
             textField.isHidden = true
             goButton.isHidden = true
             welcomeUser.isHidden = false
             
-            welcomeUser.text = "Welcome, \(textField.text!)!"
+            welcomeUser.text = "\(textField.text!)"
             
         } catch {
             // Error handling goes here
