@@ -12,6 +12,8 @@ import CoreData
 class ViewController: UIViewController {
 
     
+    var userLimit : Bool = false
+    
     @IBOutlet var goButton: UIButton!
     @IBOutlet var textField: UITextField!
     @IBOutlet var welcomeUser: UILabel!
@@ -29,6 +31,9 @@ class ViewController: UIViewController {
         // Creates a profile for the user of the app
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context)
         
+        // Adding values to newUser manually
+        // newUser.setValue("Sebastian Crossa", forKey: "username")
+        
         // Lets us communicate with CoreData and analize sotored data on the "Users" entity
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
         
@@ -40,12 +45,14 @@ class ViewController: UIViewController {
             // Constant in charge of fetching the results
             let results = try context.fetch(request)
             
-            if results.count > 0 {
-                goButton.isHidden = true
-                textField.isHidden = true
-                welcomeUser.isHidden = false
-                
-                welcomeUser.text = "Welcome, user :)"
+            for results in results as! [NSManagedObject] {
+                if let username = results.value(forKey: "username") {
+                    textField.isHidden = true
+                    goButton.isHidden = true
+                    welcomeUser.isHidden = false
+                    
+                    welcomeUser.text = "Welcome, \(username)!"
+                }
             }
             
         } catch {
@@ -55,14 +62,28 @@ class ViewController: UIViewController {
     }
     
     @IBAction func logIn(_ sender: Any) {
-        /*
-        if results.count == 0 {
-            newUser.setValue("\(textField.text)", forKey: "username")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let newValues = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context)
+        
+        newValues.setValue(textField.text, forKey: "username")
+        
+        // Saving the new values in CoreData
+        do {
+            try context.save()
             
-            print("** Corenter has received new data **")
-            print()
+            textField.isHidden = true
+            goButton.isHidden = true
+            welcomeUser.isHidden = false
+            
+            welcomeUser.text = "Welcome, \(textField.text!)!"
+            
+        } catch {
+            // Error handling goes here
+            print("** Corenter : Data could not be saved")
         }
-        */
     }
 
     override var prefersStatusBarHidden: Bool {
