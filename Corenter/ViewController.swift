@@ -29,7 +29,7 @@ class ViewController: UIViewController {
         // This will let us acces and modify CoreData
         let context = appDelegate.persistentContainer.viewContext
         
-        // Adding values to newUser manually
+        // Adding values to newUser manually (Currently not in use)
         // newUser.setValue("Sebastian Crossa", forKey: "username")
         
         // Lets us communicate with CoreData and analize sotored data on the "Users" entity
@@ -57,7 +57,7 @@ class ViewController: UIViewController {
                     welcomeUser.text = "\(username)"
                 }
             }
-            
+          
         } catch {
             // Error handling goes here
             print("** Corenter : Results could not be fetched")
@@ -83,6 +83,7 @@ class ViewController: UIViewController {
             textField.isHidden = true
             goButton.isHidden = true
             welcomeUser.isHidden = false
+            welcomeTitle.isHidden = false
             
             welcomeUser.text = "\(textField.text!)"
             
