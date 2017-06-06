@@ -15,7 +15,11 @@ class ViewController: UIViewController {
     @IBOutlet var textField: UITextField!
     @IBOutlet var welcomeUser: UILabel!
     
+    @IBOutlet var updateUsernameTextField: UITextField!
+    
     @IBOutlet var logInTitle: UILabel!
+    @IBOutlet var updateTitle: UIButton!
+    @IBOutlet var logOutTitle: UIButton!
     @IBOutlet var welcomeTitle: UILabel!
     
     override func viewDidLoad() {
@@ -51,8 +55,12 @@ class ViewController: UIViewController {
                     logInTitle.isHidden = true
                     textField.isHidden = true
                     goButton.isHidden = true
+                    
+                    updateTitle.isHidden = false
+                    logOutTitle.isHidden = false
                     welcomeUser.isHidden = false
                     welcomeTitle.isHidden = false
+                    updateUsernameTextField.isHidden = false
                     
                     welcomeUser.text = "\(username)"
                 }
@@ -75,6 +83,8 @@ class ViewController: UIViewController {
         // Create a new value in CoreData with the text entered by the user
         newValues.setValue(textField.text, forKey: "username")
         
+        print("-- Corenter: \(textField.text) has craeted")
+        
         // Saving the new values in CoreData
         do {
             try context.save()
@@ -87,12 +97,22 @@ class ViewController: UIViewController {
             
             welcomeUser.text = "\(textField.text!)"
             
+            print("-- Corenter: \(textField.text) has been succesfully saved.")
+            
         } catch {
             // Error handling goes here
             print("** Corenter : Data could not be saved")
         }
     }
 
+    @IBAction func updateButton(_ sender: Any) {
+        
+    }
+    
+    @IBAction func logOutButton(_ sender: Any) {
+        
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
