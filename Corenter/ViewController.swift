@@ -56,6 +56,11 @@ class ViewController: UIViewController {
             for results in results as! [NSManagedObject] {
                 if let username = results.value(forKey: "username") {
                     
+                    /*
+                    context.delete(results)
+                    try context.save()
+                    */
+ 
                     logInTitle.alpha = 0
                     textField.alpha = 0
                     goButton.alpha = 0
@@ -67,7 +72,6 @@ class ViewController: UIViewController {
                     updateUsernameTextField.alpha = 1
                     
                     welcomeUser.text = "\(username)"
- 
                 }
             }
             
@@ -106,7 +110,9 @@ class ViewController: UIViewController {
             
             welcomeUser.text = "\(textField.text!)"
             
-            print("-- Corenter: \(textField.text!) has been succesfully saved.")
+            print("-- Corenter : \(textField.text!) has been succesfully saved.")
+            
+            textField.text = ""
             
         } catch {
             // Error handling goes here
@@ -140,7 +146,6 @@ class ViewController: UIViewController {
                 // Loop through the results as an array of NSManagedObjects
                 for results in results as! [NSManagedObject] {
                     if let username = results.value(forKey: "username") as? String {
-                        
                         do {
                             // Deletes the username the user previously had
                             context.delete(results)
@@ -176,6 +181,38 @@ class ViewController: UIViewController {
     
     @IBAction func logOutButton(_ sender: Any) {
         
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
+        
+        request.predicate = NSPredicate(format: "username = %@", welcomeUser.text!)
+        
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            let results = try context.fetch(request)
+            for results in results as! [NSManagedObject] {
+                context.delete(results)
+                try context.save()
+                
+                print("-- Corenter : User information has succesfully been deleted and saved.")
+            }
+        } catch {
+            // Error handling
+            print("** Corenter : An error has ocurred. User information could not be saved.")
+        }
+
+        logInTitle.alpha = 1
+        textField.alpha = 1
+        goButton.alpha = 1
+        
+        updateTitle.alpha = 0
+        logOutTitle.alpha = 0
+        welcomeUser.alpha = 0
+        welcomeTitle.alpha = 0
+        updateUsernameTextField.alpha = 0
     }
     
     override var prefersStatusBarHidden: Bool {
