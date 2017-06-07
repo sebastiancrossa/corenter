@@ -28,6 +28,9 @@ class ViewController: UIViewController {
         goButton.layer.cornerRadius = 8
         welcomeUser.textColor = goButton.backgroundColor
         
+        updateTitle.layer.cornerRadius = 8
+        logOutTitle.layer.cornerRadius = 8
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         // This will let us acces and modify CoreData
@@ -52,20 +55,22 @@ class ViewController: UIViewController {
             // user. If not, it will stay the same
             for results in results as! [NSManagedObject] {
                 if let username = results.value(forKey: "username") {
-                    logInTitle.isHidden = true
-                    textField.isHidden = true
-                    goButton.isHidden = true
                     
-                    updateTitle.isHidden = false
-                    logOutTitle.isHidden = false
-                    welcomeUser.isHidden = false
-                    welcomeTitle.isHidden = false
-                    updateUsernameTextField.isHidden = false
+                    logInTitle.alpha = 0
+                    textField.alpha = 0
+                    goButton.alpha = 0
+                    
+                    updateTitle.alpha = 1
+                    logOutTitle.alpha = 1
+                    welcomeUser.alpha = 1
+                    welcomeTitle.alpha = 1
+                    updateUsernameTextField.alpha = 1
                     
                     welcomeUser.text = "\(username)"
+ 
                 }
             }
-          
+            
         } catch {
             // Error handling goes here
             print("** Corenter : Results could not be fetched")
@@ -83,21 +88,25 @@ class ViewController: UIViewController {
         // Create a new value in CoreData with the text entered by the user
         newValues.setValue(textField.text, forKey: "username")
         
-        print("-- Corenter: \(textField.text) has craeted")
+        print("-- Corenter: \(textField.text!) has created")
         
         // Saving the new values in CoreData
         do {
             try context.save()
             
-            logInTitle.isHidden = true
-            textField.isHidden = true
-            goButton.isHidden = true
-            welcomeUser.isHidden = false
-            welcomeTitle.isHidden = false
+            logInTitle.alpha = 0
+            textField.alpha = 0
+            goButton.alpha = 0
+            
+            updateTitle.alpha = 1
+            logOutTitle.alpha = 1
+            welcomeUser.alpha = 1
+            welcomeTitle.alpha = 1
+            updateUsernameTextField.alpha = 1
             
             welcomeUser.text = "\(textField.text!)"
             
-            print("-- Corenter: \(textField.text) has been succesfully saved.")
+            print("-- Corenter: \(textField.text!) has been succesfully saved.")
             
         } catch {
             // Error handling goes here
@@ -106,6 +115,62 @@ class ViewController: UIViewController {
     }
 
     @IBAction func updateButton(_ sender: Any) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
+        
+        let newValue = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context)
+        
+        request.predicate = NSPredicate(format: "username = %@", welcomeUser.text!)
+        
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            /*  
+                Variable in charge of the results made by the fetching the request
+                In this case we added a specific predicate that will select the username
+                that the user currently has selected so he/she can change it
+            */
+            
+            let results = try context.fetch(request)
+            
+            if results.count > 0 {
+                // Loop through the results as an array of NSManagedObjects
+                for results in results as! [NSManagedObject] {
+                    if let username = results.value(forKey: "username") as? String {
+                        
+                        do {
+                            // Deletes the username the user previously had
+                            context.delete(results)
+                            
+                            print("-- Corenter : Username has been deleted.")
+                            
+                            // Creates a new username based on what the user has typed
+                            newValue.setValue(updateUsernameTextField.text!, forKey: "username")
+                            
+                            print("-- Corenter : \(newValue.value(forKey: "username")!) has been created.")
+                            
+                            try context.save()
+                            
+                            welcomeUser.text = "\(updateUsernameTextField.text!)"
+                            print("-- Corenter : \(updateUsernameTextField.text!) has succesfully saved and updated")
+                            
+                            updateUsernameTextField.text = ""
+                            
+                        } catch {
+                            // Error processing
+                            print("** Corenter : An error has ocurred. Data could not be updated succesfully")
+                        }
+                    }
+                }
+            }
+            
+        } catch {
+            // Error handling
+            print("** Corenter : An error has ocurred. DData could not be retrieved")
+        }
         
     }
     
